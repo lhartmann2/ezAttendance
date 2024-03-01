@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Attendance Record'"></title>
+</head>
+
+<body >
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <div class="text-center align-middle container-fluid">
+        <div class="row row-cols-3">
+            <div class="d-grid col-4 mx-auto">
+                <a th:href="${backUrl}" class="btn btn-primary align-middle">Back</a>
+            </div>
+            <div class="d-grid col-4 mx-auto">
+                <a th:href="${takeUrl}" class="btn btn-primary" th:text="${takeText}">Take</a>
+            </div>
+            <div class="d-grid col-4 mx-auto">
+                <a th:href="${exportUrl}" class="btn btn-primary">Report</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div th:each="a:${atList}">
+            <th:block th:if="${a.student.nickName == null or #strings.length(a.student.nickName)<1}">
+                <a th:if="${dateBased}" th:href="@{/managers/attendance/studentDetails/{sId}/{cId}/{selectType}/{tId}/{sD}/{eD}(cId=${cId}, sId=${a.student.id}, selectType=${selectType}, tId=${tId}, sD=${startDate}, eD=${endDate})}"><h4 th:text="${a.student.firstName}+ ' ' +${a.student.lastName}+' '"></h4></a>
+                <a th:unless="${dateBased}" th:href="@{/managers/attendance/studentDetails/{sId}/{cId}/{selectType}/{tId}(cId=${cId}, sId=${a.student.id}, selectType=${selectType}, tId=${tId})}"><h4 th:text="${a.student.firstName}+ ' ' +${a.student.lastName}+' '"></h4></a>
+            </th:block>
+            <th:block th:unless="${a.student.nickName == null or #strings.length(a.student.nickName)<1}">
+                <a th:if="${dateBased}" th:href="@{/managers/attendance/studentDetails/{sId}/{cId}/{selectType}/{tId}/{sD}/{eD}(cId=${cId}, sId=${a.student.id}, selectType=${selectType}, tId=${tId}, sD=${startDate}, eD=${endDate})}"><h4 th:text="${a.student.nickName} + ' ' +${a.student.lastName}"></h4></a>
+                <a th:unless="${dateBased}" th:href="@{/managers/attendance/studentDetails/{sId}/{cId}/{selectType}/{tId}(cId=${cId}, sId=${a.student.id}, selectType=${selectType}, tId=${tId})}"><h4 th:text="${a.student.nickName} + ' ' +${a.student.lastName}"></h4></a>
+            </th:block>
+            <ul>
+                <li>Present: <span th:if="${a.present}"><img src="/images/check.svg" width="24" height="32"></span><span th:unless="${a.present}"><img src="/images/x.svg" width="24" height="32"></span></li>
+                <li th:unless="${a.present}">Excused: <span th:if="${a.excused}"><img src="/images/check.svg" width="24" height="32"></span><span th:unless="${a.excused}"><img src="/images/x.svg" width="24" height="32"></span></li>
+                <li>Notes: <em><span th:text="${a.reason}"></span></em></li>
+            </ul>
+        </div>
+    </div>
+
+    <div th:if="${notTaken}" class="container text-center">
+        <em>Attendance not taken for this class yet.</em>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

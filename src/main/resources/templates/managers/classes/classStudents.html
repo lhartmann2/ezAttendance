@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Class Students'"></title>
+</head>
+
+<body >
+
+<div class="container">
+
+    <div th:insert="fragments/navbarClasses :: navbarClasses"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <a th:href="${backUrl}" class="btn btn-primary btn-pad">Back</a>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead align="center">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Report</th>
+                <th scope="col">Classes</th>
+                <th scope="col">Details</th>
+                <th scope="col">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student:${studentList}">
+                <th:block th:if="${student.nickName == null or #strings.length(student.nickName)<1}">
+                    <td th:text="${student.firstName}+' '+${student.lastName}" align="center" valign="middle"></td>
+                </th:block>
+                <th:block th:unless="${student.nickName == null or #strings.length(student.nickName)<1}">
+                    <td th:text="${student.nickName}+' '+${student.lastName}" align="center" valign="middle"></td>
+                </th:block>
+                <td align="center" valign="middle"><a th:href="@{/managers/attendance/export3/{sId}/{cId}(sId = ${student.id}, cId = ${classId})}">Report</a></td>
+                <td align="center" valign="middle"><a th:href="@{/managers/students/classes/{id}/0(id=${student.id})}">Classes</a></td>
+                <td align="center" valign="middle"><a th:href="@{/managers/classes/studentDetails/{sId}/{cId}/{select}(sId = ${student.id}, cId = ${classId}, select=${selectType})}">Details</a></td>
+                <td align="center" valign="middle"><a th:href="@{/managers/students/edit/{id}(id=${student.id})}">Edit</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${none}" class="text-center container">
+        <em>None Found</em>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

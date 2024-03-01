@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - User Guide'"></title>
+</head>
+
+    <body>
+
+        <div class="container">
+            <div th:insert="fragments/navbarHome :: navbarHome"></div>
+
+            <div class="text-center container">
+                <h4>User Guide</h4>
+                <h5>Select a Topic to Learn More</h5>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col content mx-auto">
+                        <a href="/managers/" class="btn btn-primary btn-pad-top">Back</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="container">
+                <div class="row">
+                    <a href="#chap1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap1"><ul><li>Getting Started</li></ul></a>
+                    <div class="collapse" id="chap1">
+                        <div class="alert alert-secondary">There are 4 steps that need to be done in order to ensure success in using this app:
+                            <ol>
+                                <li>Create Parents / Guardians from the 'Parents' tab.</li>
+                                <li>Create Students from the 'Students' tab, and associate at least one parent / guardian.</li>
+                                <li>Create Teachers from the 'Teachers' tab</li>
+                                <li>Create Classes from the 'Classes' tab, and associate a teacher and one or more students.</li>
+                            </ol>
+                            In short, students need to be attached to at least one parent / guardian, and classes need to be attached to a teacher and one or more students.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#chap2" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap2"><ul><li>Taking Attendance</li></ul></a>
+                    <div class="collapse" id="chap2">
+                        <div class="alert alert-secondary">Navigate to the attendance menu from the 'Attendance' Tab.<br>
+                            By default, the page will show classes occurring today by all teachers.<br>
+                            You can filter classes by time frame (today, this week, this month, or a specified date range)
+                            in addition to filtering by a particular teacher.<br>
+                            To take attendance for a particular class session, press 'Take Attendance' on the class.<br>
+                            For speed and ease of use, all students are marked as 'present' by default.<br>To mark absent, simply
+                            click or tap the 'present' slider.<br>This will reveal another slider, used to indicate if the student's absence
+                            is excused or not.<br>
+                            Below the sliders is a text box that can be used to enter details, such as a reason for being absent (sick, on vacation, etc.)
+                            or other information teachers may want to see at the beginning of class.<br>
+                            After pressing 'Submit', the record will be saved and the class session's attendance will be marked as 'Taken'.<br>
+                            To edit the attendance record, simply press 'Take Attendance' on the class again, or by clicking 'View Record' and then clicking 'Edit'.
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <a href="#chap3" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap3"><ul><li>Attendance Reports</li></ul></a>
+                <div class="collapse" id="chap3">
+                    <div class="alert alert-secondary">There are two ways to generate attendance reports:
+                        <ol>
+                            <li>For One Class Session:<br>
+                                In the Attendance menu, find the class session you want to see a report on. Filter by date and teacher as needed.<br>
+                                Press 'View Record' to see the list of students and their attendance for that particular class session.<br>
+                                By pressing 'Report', you can choose to export the attendance report as a text file or CSV (Excel) document.
+                            </li>
+                            <li>By Student:<br>
+                                In the Attendance menu, press the 'Report' button.<br>
+                                From this page, select the student you want an attendance report for.<br>
+                                Next, you will be asked which of the student's classes (or all classes) you want a report on.<br>
+                                (This page can also be accessed from the Student menu and pressing 'Report' on a student).<br>
+                                Finally, you will be asked if you want to focus on a particular range of time or if you want the student's entire history.<br>
+                                You will then be presented with a list of the student's attendances.<br>
+                                Using the buttons at the top of the page, you can export the attendance report as a text file or CSV (Excel) document.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <a href="#chap4" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap4"><ul><li>Teachers</li></ul></a>
+                    <div class="collapse" id="chap4">
+                        <div class="alert alert-secondary">Navigate to the Teachers tab in the top menu.<br>
+                            A list of teachers can be seen. They can be sorted by first or last name.<br>
+                            Pressing 'Classes' will show a list of classes taught by that teacher.<br>
+                            <ul>
+                                <li>Adding Teachers<br>
+                                    To add a teacher, press the 'Add Teacher' button at the top of the page.<br>
+                                    You will be presented with a form where you can fill out the teacher's information.<br>
+                                    A phone number is required but an email address is optional.<br>
+                                </li>
+                                <li>Editing and Deleting Teachers<br>
+                                    If you need to change a teacher's information, locate their name on the teacher list and press 'Edit'.<br>
+                                    From the edit page, a teacher can be deleted if needed.
+                                </li>
+                            </ul>
+                            <em>Note: There must be at least one teacher before a class can be created.</em>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#chap5" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap5"><ul><li>Parents</li></ul></a>
+                    <div class="collapse" id="chap5">
+                        <div class="alert alert-secondary">Navigate to the Parents tab in the top menu.<br>
+                            A list of parents / guardians can be seen. They can be sorted by first or last name.<br>
+                            To see a parent / guardian's students, press 'Students' on a particular entity.
+                            Press 'Details' to see more information such as contact, address, notes, etc.
+                            <ul>
+                                <li>Adding Parents<br>
+                                    To add a parent or guardian, press the 'Add Parent' button at the top of the page.<br>
+                                    You will be presented with a form where you can fill out the parent or guardian's information.<br>
+                                    Everything is optional <em>except</em> for a first and last name and a phone number.<br>
+                                    Anything filled out here can be seen when clicking on a parent / guardian's details anywhere in the app.<br>
+                                </li>
+                                <li>Editing and Deleting Parents<br>
+                                    To add or edit information to a parent or guardian, find their name in the parents list and press 'Edit'.<br>
+                                    From the edit page, a parent / guardian can be deleted with the 'Delete' button if needed.<br>
+                                    If a parent is deleted and is attached as the primary parent to a student, the student's primary parent <br>
+                                    slot will be blank and one will need to be manually added.<br>(See the 'Students' topic on how to attach parents to a student).<br>
+                                </li>
+                            </ul>
+                            <em>Note: There must be at least one parent before a student can be created, as every student must be attached to at least one parent.</em>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#chap6" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap6"><ul><li>Students</li></ul></a>
+                    <div class="collapse" id="chap6">
+                        <div class="alert alert-secondary">Navigate to the Students tab in the top menu.<br>
+                            A list of students can be seen. They can be sorted by first name, last name or by age (ascending or descending).<br>
+                            Pressing 'Classes' for a particular student will show a list of classes they are currently enrolled in.<br>
+                            Pressing 'Details' for a particular student will show additional information, such as their parents / guardians, allergies, preferred hospital, etc.<br>
+                            Pressing 'Report' for a particular student will start the process of generating an attendance report.<br>(See the 'Taking Attendance' topic).<br>
+                            <ul>
+                                <li>Adding Students<br>
+                                    To add a student, press the 'Add Student' button at the top of the page.<br>
+                                    <em>Important: Before continuing, ensure a parent or guardian is created (See the 'Parents' topic).</em><br>
+                                    You will be presented with a form where you can fill out the student's information.<br>
+                                    Everything is optional <em>except</em> for a first and last name, birthday, and a primary parent or guardian.<br>
+                                    To attach a parent or guardian, press the dropdown box and select the previously created parent.<br>
+                                    Optionally a second parent or guardian can be attached.<br>
+                                    Information entered here can be seen when clicking on a student's details anywhere in the app.<br>
+                                </li>
+                                <li>Editing and Deleting Students<br>
+                                    To add or edit information to a student, find their name in the students list and press 'Edit'.<br>
+                                    <em>Note: If you previously deleted a parent that was attached to a student as their primary parent,<br>
+                                     the primary parent / guardian dropdown box will be blank and a new parent / guardian must be attached.</em><br>
+                                    From the edit page, a student can deleted with the 'Delete' button if needed.<br>
+                                    If a student is deleted, they will be removed from all enrolled classes and any attendance data will be removed.<br>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#chap7" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap7"><ul><li>Classes</li></ul></a>
+                    <div class="collapse" id="chap7">
+                        <div class="alert alert-secondary">Navigate to the Classes tab in the top menu.<br>
+                            A list of classes can be seen. They can be sorted by current, past (classes that have ended), <br>
+                            future (classes that haven't started yet) and all (current, past and future).<br>
+                            Pressing 'Students' for a particular class will show the students enrolled.<br>
+                            From here you can see each student's details (contact, parents, allergies, etc.),<br>
+                            the classes they are enrolled in, generate an attendance report, or directly edit them.<br>
+                            Pressing 'Details' for a particular class will show more information such as the dates and times of the class.<br>
+                            <ul>
+                                <li>Adding Classes<br>
+                                    To add a class, press the 'Add Class' button at the top of the page.<br>
+                                    <em>Important: Before continuing, ensure that at least one teacher and one student has been created <br>
+                                    (See the 'Teachers' and 'Students' topics).</em><br>
+                                    You will be presented with a form where you can fill out the classes details.<br>
+                                    You can add one or more students using the student dropdown search box.<br>
+                                    Information entered here can be seen when clicking on a class' details anywhere in the app.<br>
+                                </li>
+                                <li>Editing and Deleting Classes<br>
+                                    To edit a particular class, find it in the Class list and press 'Edit'.<br>
+                                    <em>WARNING: Making changes to the start date, end date or day of the week of a class <br>
+                                    will result in all previously taken attendance data being reset!</em><br>
+                                    From the edit page, a class can be deleted with the 'Delete' button.<br>
+                                    All attendance data for a deleted class will also be deleted.<br>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#chap8" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap8"><ul><li>Changing Password</li></ul></a>
+                    <div class="collapse" id="chap8">
+                        <div class="alert alert-secondary">At the bottom of any page, press the 'Account' link.<br>
+                            Press the 'Change Password' button and enter a password that is at least 8 characters long.<br>
+                            Use a strong password that is unlikely to be guessed to ensure the security of the app and its data.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#chap9" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap9"><ul><li>Deleting Account</li></ul></a>
+                    <div class="collapse" id="chap9">
+                        <div class="alert alert-secondary">At the bottom of any page, press the 'Account' link.<br>
+                        Press the 'Delete Account' button. You will be asked to confirm your choice.<br>
+                        <em>Note: Deleting user accounts does not affect any other data.</em></div>
+                    </div>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="row">
+                        <a href="#chap10" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap10"><ul><li>Admins: Creating Accounts</li></ul></a>
+                        <div class="collapse" id="chap10">
+                            <div class="alert alert-secondary">At the bottom of any page, press the 'Admin' link.<br>
+                                Press the 'Create User Account' button.<br>
+                                Enter a username and password that is at least 8 characters long.<br>
+                                Use a strong password that is unlikely to be guessed to ensure the security of the app and its data.<br>
+                                You can set whether the new account is an admin or not. This cannot be changed later, so carefully <br>
+                                consider who is allowed to have admin privileges.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="#chap11" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap11"><ul><li>Admins: Changing Passwords</li></ul></a>
+                        <div class="collapse" id="chap11">
+                            <div class="alert alert-secondary">At the bottom of any page, press the 'Admin' link.<br>
+                                Press the 'Change Passwords' button.<br>
+                                Select the username you wish to change the password for and enter a new password that is at least 8 characters long.<br>
+                                Use a strong password that is unlikely to be guessed to ensure the security of the app and its data.<br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="#chap12" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap12"><ul><li>Admins: Unlocking Accounts</li></ul></a>
+                        <div class="collapse" id="chap12">
+                            <div class="alert alert-secondary">For security purposed, users who try to login with an invalid password 5 times will have their account locked for 24 hours.<br>
+                                Admins can manually unlock accounts if needed.<br>
+                                To unlock an account, at the bottom of any page, press the 'Admin' link.<br>
+                                Press the 'Unlock Accounts' button.<br>
+                                Select the account you wish to unlock and reset failed login attempts for.<br>
+                                You may choose to reset the user's password at this time, too.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="#chap13" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap13"><ul><li>Admins: Deleting Users</li></ul></a>
+                        <div class="collapse" id="chap13">
+                            <div class="alert alert-secondary">Admins can delete user accounts and other admins.<br>
+                                To ensure there is always at least one admin on the system, admins cannot delete themselves.<br>
+                                To delete an account, at the bottom of any page, press the 'Admin' link.<br>
+                                Press the 'Delete Users' button.<br>
+                                Select the user you wish to delete and press the 'Delete' button.<br>
+                                Exercise caution in this menu as users cannot be undeleted.<br>
+                                <em>Note: Deleting users does not affect any other data.</em>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="#chap14" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap14"><ul><li>Admins: Upcoming Events Manager</li></ul></a>
+                        <div class="collapse" id="chap14">
+                            <div class="alert alert-secondary">Upcoming events are dates shown on the homepage to all users.<br>
+                                To manage upcoming events, at the bottom of any page, press the 'Admin' link.<br>
+                                Press the 'Upcoming Events Manager' button.<br>
+                                From here you will see a list of events, with links on each to edit and delete them.<br>
+                                Press the 'Create Event' to add an entry.<br>
+                                Events with dates in the past will not appear on the homepage, so deleting past events is not necessary.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="#chap15" data-bs-toggle="collapse" aria-expanded="false" aria-controls="chap15"><ul><li>Admins: Contact Lists</li></ul></a>
+                        <div class="collapse" id="chap15">
+                            <div class="alert alert-secondary">Contact Lists are an easy way to get contact info for parents, teachers and students all at once.<br>
+                                To see the contact lists, at the bottom of any page, press the 'Admin' link.<br>
+                                Press the 'Contact Lists' button.<br>
+                                Select if you want the contact lists for parents, teachers or students.<br>
+                                Parents' contact lists can be sorted by class. This is useful in the situation of a class being cancelled and all affected parents need to be contacted.<br>
+                                From any contact list page, the information can be exported using the buttons at the top to a text file or CSV (Excel) document.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
+            <div th:insert="fragments/footer :: footer"></div>
+        </div>
+
+    <script src="/js/bootstrap.bundle.js"></script>
+
+    </body>
+</html>

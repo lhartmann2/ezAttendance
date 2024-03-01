@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+  <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Add Teacher'"></title>
+</head>
+
+<body>
+<div class="container">
+
+  <div th:insert="fragments/navbarTeachers :: navbarTeachers"></div>
+
+  <h4>Teachers > Add Teacher</h4>
+  <hr>
+
+  <div class="container">
+    <form action="#" th:action="@{/managers/teachers/add}" th:object="${teacher}" method="POST">
+
+      <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+        <p>Please correct errors below.</p>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="fn" class="form-label">First Name</label>
+          <input type="text" th:field="*{firstName}" placeholder="First Name"
+                class="form-control mb-4 col-4" id="fn" aria-label="First Name" required>
+          <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
+            <p th:errors="*{firstName}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="ln" class="form-label">Last Name</label>
+          <input type="text" th:field="*{lastName}" placeholder="Last Name"
+                class="form-control mb-4 col-4" id="ln" aria-label="Last Name" required>
+          <span class="help-block" th:if="${#fields.hasErrors('lastName')}">
+            <p th:errors="*{lastName}" class="text-danger"></p>
+          </span>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="ph" class="form-label">Phone Number</label>
+          <input type="tel" th:field="*{phone}" placeholder="Phone Number"
+                 class="form-control mb-4 col-4" id="ph" aria-label="Phone Number" required>
+          <span class="help-block" th:if="${#fields.hasErrors('phone')}">
+            <p th:errors="*{phone}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="email" class="form-label">Email<em class="text-muted"> (Optional)</em></label>
+          <input type="email" th:field="*{email}" placeholder="Email"
+                 class="form-control mb-4 col-4" id="email" aria-label="Email">
+          <span class="help-block" th:if="${#fields.hasErrors('email')}">
+            <p th:errors="*{email}" class="text-danger"></p>
+          </span>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4 gap-2">
+        <div class="col">
+          <button type="button" class="btn btn-outline-danger col float-end btn-pad" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary col float-end" id="submitBtn">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <br><br>
+
+  <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/addTeacher.js"></script>
+</body>
+</html>

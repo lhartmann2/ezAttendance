@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Contact Lists'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Contact Lists</h4>
+    <hr>
+
+    <div class="container">
+        <a href="/admins/" class="btn btn-primary btn-pad-top">Back</a>
+    </div>
+    <br>
+
+    <div class="container">
+        <h4>Select Group for Contact List:</h4>
+    </div>
+
+    <div class="text-center container-fluid">
+        <div class="row row-cols-3">
+            <div class="d-grid col-4 mx-auto">
+                <a href="/admins/parentContacts/0" class="btn btn-primary btn-pad-top">Parents</a>
+            </div>
+            <div class="d-grid col-4 mx-auto">
+                <a href="/admins/teacherContacts/0" class="btn btn-primary btn-pad-top">Teachers</a>
+            </div>
+            <div class="d-grid col-4 mx-auto">
+                <a href="/admins/studentContacts/0" class="btn btn-primary btn-pad-top">Students</a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

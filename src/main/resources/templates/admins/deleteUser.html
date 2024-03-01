@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Delete Users'"></title>
+</head>
+
+<body >
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Delete Users</h4>
+    <hr>
+
+    <div class="container">
+        <form action="#" th:action="@{/admins/deleteUser}" th:object="${user}" method="POST">
+
+            <div class="row"style="max-width: 350px;">
+                <div class="col">
+                    <label for="un" class="form-label">Select Account</label>
+                    <select id="un" class="form-control select-picker" name="username" th:field="*{name}"required>
+                        <option value="-1">Select User</option>
+                        <option th:each="u:${userList}" th:value="${u.username}" th:text="${u.username}"/>
+                    </select>
+                    <span class="help-block" th:if="${userError}">
+                        <p class="text-danger">Select a valid user.</p>
+                    </span>
+                    <span class="help-block" th:if="${isMe}">
+                        <p class="text-danger">You cannot delete yourself.</p>
+                    </span>
+                    <input type="hidden" th:field="*{password}">
+                    <input type="hidden" th:field="*{matchingPassword}">
+                </div>
+            </div>
+
+
+            <br>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" id="sbmBtn" class="btn btn-outline-danger btn-pad btn-pad-top">Delete</button>
+                    <a href="/admins/" class="btn btn-danger btn-pad btn-pad-top">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

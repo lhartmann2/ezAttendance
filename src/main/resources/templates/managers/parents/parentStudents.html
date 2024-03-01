@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Parent Students'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div th:insert="fragments/navbarParents :: navbarParents"></div>
+
+  <h4 th:text="${headerText}"></h4>
+  <hr>
+
+  <a href="/managers/parents/" class="btn btn-primary">Back</a>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead align="center">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Classes</th>
+        <th scope="col">Details</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="student:${studentList}">
+        <th:block th:if="${student.nickName == null or #strings.length(student.nickName)<1}">
+          <td th:text="${student.firstName}+' '+${student.lastName}" align="center" valign="middle"></td>
+        </th:block>
+        <th:block th:unless="${student.nickName == null or #strings.length(student.nickName)<1}">
+          <td th:text="${student.nickName}+' '+${student.lastName}" align="center" valign="middle"></td>
+        </th:block>
+        <td align="center" valign="middle"><a th:href="@{/managers/students/classes/{sId}/0(sId = ${student.id})}">Classes</a></td>
+        <td align="center" valign="middle"><a th:href="${'/managers/parents/studentDetails/' + {student.id} + '/' +{parentId}}">Details</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div th:if="${none}" class="text-center container">
+    <em>None Found</em>
+  </div>
+  <br><br>
+
+  <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

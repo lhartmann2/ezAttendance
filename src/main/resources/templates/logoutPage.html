@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Logged Out'"></title>
+</head>
+<body>
+
+  <div class="container-fluid text-center">
+    <img style="scale: 75%; max-width: 350px; margin: 0 auto;" src="/images/logo.png"/>
+  </div>
+
+  <div class="text-center container-fluid">
+    <h4 class="text-success text-center">You have been logged out.</h4>
+    <br>
+    <h5><a href="/">Login</a></h5>
+  </div>
+
+  <span th:if="${@environment.getProperty('attendance.app.credits')}">
+    <div class="container-fluid">
+      <p class="text-center text-muted" style="font-size: 0.875em; margin-top: 10px;"><a href="https://github.com/lhartmann2" target="_blank">2024 LHP</a></p>
+    </div>
+  </span>
+
+  <script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

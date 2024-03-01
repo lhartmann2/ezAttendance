@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Student Details'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarClasses :: navbarClasses"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <a th:href="${backUrl}" class="btn btn-primary btn-pad">Back</a>
+    <a th:href="${editUrl}" class="btn btn-primary btn-pad">Edit</a>
+
+
+    <br><br>
+    <h3 th:text="${firstName} + ' ' + ${lastName}"></h3>
+    <p><em th:text="${nickName}"></em></p>
+
+    <h5>Birthday</h5>
+    <p th:text="${#dates.format(dob, 'MMM-dd-yyyy')} + ' ' + ${age}"></p>
+
+    <h4>Parents / Guardians</h4>
+    <a th:href="${parent1Url}"><p th:text="${parent1}"></p></a>
+    <a th:href="${parent2Url}"><p th:text="${parent2}"></p></a>
+    <br>
+
+    <div th:unless="${phone == null or #strings.length(phone)<1}">
+        <h4>Contact</h4>
+        <p><a th:text="${phone}" th:href="'tel:+'+${phone}"></a></p>
+        <br>
+    </div>
+
+    <h4>Preferred Hospital</h4>
+    <th:block th:if="${#strings.isEmpty(hospital)}">
+        <p><em>Not Specified</em></p>
+    </th:block>
+    <th:block th:unless="${#strings.isEmpty(hospital)}">
+        <p th:text="${hospital}" style="overflow-wrap:break-word;"></p>
+    </th:block>
+    <br>
+
+    <h4>Allergies</h4>
+    <p th:text="${allergies}" style="overflow-wrap:break-word;"></p>
+    <br>
+
+    <h4>Notes</h4>
+    <p th:text="${notes}" style="overflow-wrap:break-word;"></p>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

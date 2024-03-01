@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Attendance'"></title>
+</head>
+
+<body >
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+    </svg>
+
+    <div th:if="${showBanner}" class="container">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Attendance Saved.</strong>
+        </div>
+    </div>
+
+    <div class="text-center container">
+        <form action="#" th:action="${submitUrl}"  method="GET">
+            <div class="row gx-2 mt-2">
+                <div class="col">
+                    <label for="sd" class="form-label">From Date</label>
+                    <input type="date" th:name="startDate" th:value="${sdVal}" name="startDate" placeholder="From Date"
+                           class="form-control mb-4 col-4" id="sd" aria-label="From Date" required>
+                    <span class="help-block" th:if="${startDateError}">
+                        <p class="text-danger">From Date must be equal to or before To Date.</p>
+                    </span>
+                </div>
+                <div class="col">
+                    <label for="ed" class="form-label">To Date</label>
+                    <input type="date" th:name="endDate" th:value="${edVal}" name="endDate" placeholder="To Date"
+                           class="form-control mb-4 col-4" id="ed" aria-label="To Date" required>
+                    <span class="help-block" th:if="${endDateError}">
+                        <p class="text-danger">To Date must be equal to or after From Date.</p>
+                    </span>
+                </div>
+                <div class="col">
+                    <label for="submitBtn" class="form-label">Search By Date Range</label>
+                    <button type="submit" id="submitBtn" class="form-control btn btn-primary mb-4 col-4">Submit</button>
+                </div>
+
+                <div class="col"></div>
+                <div class="col">
+                    <label for="teacher" class="form-label label-center">Filter by Teacher</label>
+                    <select id="teacher" name="teacher" class="form-control select-picker btn-pad">
+                        <option value="-1">All Teachers</option>
+                        <option th:each="teacher:${teacherList}" th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName}"/>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead align="center">
+            <tr>
+                <th scope="col">Class Name</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Date</th>
+                <th scope="col">Day</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Taken?</th>
+                <th scope="col">Take Attendance</th>
+                <th scope="col">View Attendance</th>
+                <th scope="col">Class Details</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="at:${containerList}">
+                    <td th:text="${at.theClass.name}" align="center" valign="middle"></td>
+                    <td th:text="${at.theClass.teacher.firstName}+' '+${at.theClass.teacher.lastName}" align="center" valign="middle"></td>
+                    <td th:text="${#dates.format(at.date, 'MMM-dd-yyyy')}" align="center" valign="middle"></td>
+                    <td th:text="${at.theClass.dayOfWeek}" align="center" valign="middle"></td>
+                    <td th:text="${#dates.format(at.theClass.startTime, 'hh:mm a')}" align="center" valign="middle"></td>
+                    <td th:text="${#dates.format(at.theClass.endTime, 'hh:mm a')}" align="center" valign="middle"></td>
+                    <td align="center" valign="middle">
+                        <th:block th:if="${at.taken}"><img src="/images/check.svg" width="32" height="40"></th:block>
+                        <th:block th:unless="${at.taken}"><img src="/images/x.svg" width="32" height="40"></th:block>
+                    </td>
+                    <td align="center" valign="middle"><a th:href="@{/managers/attendance/take/{id}/{selectType}/{tId}/{sD}/{eD}(id=${at.id}, selectType=3, tId=${teacherId}, sD=${startDate}, eD=${endDate})}">Take Attendance</a></td>
+                    <td align="center" valign="middle"><a th:href="@{/managers/attendance/view/{id}/{selectType}/{tId}/{sD}/{eD}(id=${at.id}, selectType=3, tId=${teacherId}, sD=${startDate}, eD=${endDate})}">View Record</a></td>
+                    <td align="center" valign="middle"><a th:href="@{/managers/attendance/classDetails/{id}/{selectType}/{tId}/{sD}/{eD}(id=${at.theClass.id}, selectType=3, tId=${teacherId}, sD=${startDate}, eD=${endDate})}">Class Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${none}" class="text-center container">
+        <em>None Found</em>
+    </div>
+
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<input type="hidden" id="selectType" th:value="${selectType}">
+<input type="hidden" id="selectTeacher" th:value="${teacherId}">
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/atByDateSelector.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

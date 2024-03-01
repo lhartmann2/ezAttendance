@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Attendance Export'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <div th:if="${showBanner}" class="container">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong th:text="${errorText}"></strong>
+        </div>
+    </div>
+
+    <form action="#" th:action="@{/managers/attendance/export2}" th:object="${chosenClasses}" method="post">
+        <div class="container">
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="c" class="form-label label-center">Select Class</label>
+                    <select id="c" name="classPicker" th:field="${chosenClasses.classes}" class="form-control select-picker btn-pad">
+                        <option value="-1">All Classes</option>
+                        <option th:each="c:${classList}" th:field="${chosenClasses.classes}" th:value="${c.id}" th:text="${c.name}"/>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row row-cols-4">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-pad btn-pad-top">Next</button>
+                    <a href="/managers/attendance/export" class="btn btn-danger btn-pad btn-pad-top">Back</a>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" th:field="${chosenStudents.students}">
+    </form>
+
+
+    <br>
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<input type="hidden" id="selectType" th:value="${selectType}">
+<input type="hidden" id="selectTeacher" th:value="${teacherId}">
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/attendanceSelector.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

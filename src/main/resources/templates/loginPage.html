@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Login'"></title>
+</head>
+<body>
+
+  <div class="container-fluid text-center">
+    <img src="/images/logo.png" style="scale: 75%; max-width: 350px; margin: 0 auto;"  alt="Logo"/>
+  </div>
+
+  <div th:if="${param.error}"
+       th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+    <p class="text-danger text-center" th:text="${errorMsg}"></p>
+  </div>
+
+  <div th:if="${logout}">
+    <p class="text-success text-center">You have been logged out.</p>
+  </div>
+
+  <form th:action="@{/authenticateUser}" method="POST" style="max-width: 350px; margin: 0 auto;">
+    <div class="border border-secondary p-3 rounded">
+      <p>Please login:</p>
+      <p>
+        <input type="text" name="username" class="form-control" placeholder="Username" required aria-label="Username"/>
+      </p>
+      <p>
+        <input type="password" name="password" class="form-control" placeholder="Password" required aria-label="Password"/>
+      </p>
+      <p>
+        <input type="checkbox" class="form-check-input" name="remember-me"/> Remember me on this device
+      </p>
+      <p>
+        <input type="submit" value="Login" class="btn btn-primary"/>
+      </p>
+    </div>
+  </form>
+
+  <span th:if="${@environment.getProperty('attendance.app.credits')}">
+    <div class="container-fluid">
+      <p class="text-center text-muted" style="font-size: 0.875em; margin-top: 10px;"><a href="https://github.com/lhartmann2" target="_blank">2024 LHP</a></p>
+    </div>
+  </span>
+
+  <script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

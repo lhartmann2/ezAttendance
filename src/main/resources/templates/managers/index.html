@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Home'"></title>
+</head>
+
+    <body>
+
+        <div class="container">
+            <div th:insert="fragments/navbarHome :: navbarHome"></div>
+
+            <!-- Set custom welcome message in application.properties. -->
+            <div class="text-center container">
+                <h4 th:text="${@environment.getProperty('attendance.app.welcome')}">Welcome Placeholder</h4>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="card bg-light w-100 mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Today's Classes:</h4>
+                                <div th:if="${noClasses}">
+                                    <p><em>None Today</em></p>
+                                </div>
+                                <div th:unless="${noClasses}">
+                                    <ul>
+                                    <div th:each="at:${todayContainers}">
+                                        <li><a href="/managers/attendance/-1" th:text="${at.theClass.name}+ ' at ' +${#dates.format(at.theClass.startTime, 'hh:mm a')}">Class</a></li>
+                                    </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card bg-light w-100 mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Birthdays This Month:</h4>
+                                <div th:if="${noBirthdays}">
+                                    <p><em>None This Month</em></p>
+                                </div>
+                                <div th:unless="${noBirthdays}">
+                                    <ul>
+                                        <div th:each="s:${birthdays}">
+                                            <li><a th:href="@{/managers/students/details/{sId}/0(sId=${s.id})}" th:text="${#dates.format(s.dob, 'MMM-dd-yyyy')}+': '+${s.firstName}+' '+${s.lastName}">Student</a></li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card bg-light w-100 mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Upcoming Events:</h4>
+                                <div th:if="${noEvents}">
+                                    <p><em>No Upcoming Events</em></p>
+                                </div>
+                                <div th:unless="${noEvents}">
+                                    <ul>
+                                        <div th:each="e:${events}">
+                                            <li th:text="${#dates.format(e.date, 'MMM-dd-yyyy')}+': '+${e.name}"></li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="text-center container">
+                <h5><a href="/managers/help">User Guide</a></h5>
+            </div>
+
+
+
+            <div th:insert="fragments/footer :: footer"></div>
+        </div>
+
+    <script src="/js/bootstrap.bundle.js"></script>
+
+    </body>
+</html>

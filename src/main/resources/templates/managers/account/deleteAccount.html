@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Delete Account'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Account Settings > Delete Account</h4>
+    <hr>
+
+    <div class="container">
+        <form action="#" th:action="@{/managers/account/deleteAccount}" method="POST">
+
+            <h5>Are you sure you want to delete your account?</h5>
+            <p>No attendance data will be removed.</p>
+
+
+            <br>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" id="sbmBtn" class="btn btn-outline-danger btn-pad btn-pad-top">Delete</button>
+                    <a href="/managers/account/" class="btn btn-danger btn-pad btn-pad-top">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

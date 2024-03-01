@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Create User'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Create User</h4>
+    <hr>
+
+
+    <div class="container">
+        <form action="#" th:action="@{/admins/createUser}" th:object="${user}" method="POST">
+
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <p>Please correct the errors below.</p>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="fn" class="form-label">Username</label>
+                    <input type="text" placeholder="Username" th:field="*{name}"
+                        class="form-control mb-4 col-4" id="fn" aria-label="Username" required/>
+                    <span class="help-block" th:if="${#fields.hasErrors('name')}">
+                        <p th:errors="*{name}" class="text-danger">Validation Error</p>
+                    </span>
+                    <span class="help-block" th:if="${userError}">
+                        <p class="text-danger">Username already exists.</p>
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="pw" class="form-label">Password</label>
+                    <input type="password" placeholder="Password" th:field="*{password}"
+                           class="form-control mb-4 col-4" id="pw" aria-label="Password" required/>
+                    <span class="help-block" th:if="${#fields.hasErrors('password')}">
+                        <p th:errors="*{password}" class="text-danger">Validation Error</p>
+                    </span>
+                    <span class="help-block" th:if="${pwLength}">
+                        <p class="text-danger">Password must be at least 8 characters.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="cpw" class="form-label">Confirm Password</label>
+                    <input type="password" placeholder="Confirm Password" th:field="*{matchingPassword}"
+                           class="form-control mb-4 col-4" id="cpw" aria-label="Confirm Password" required/>
+                    <span class="help-block" th:if="${#fields.hasErrors('matchingPassword')}">
+                        <p th:errors="*{matchingPassword}" class="text-danger">Validation Error</p>
+                    </span>
+                    <span class="help-block" th:if="${pwError}">
+                        <p class="text-danger">Passwords do not match.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="ad" class="form-label">Admin Account? </label>
+                    <input type="checkbox" th:field="*{admin}"
+                           class="form-check-input" id="ad" aria-label="Admin"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-pad-top">Submit</button>
+                    <a href="/admins/" class="btn btn-danger btn-pad-top">Cancel</a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

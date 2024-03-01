@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Delete Event'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Delete Upcoming Event</h4>
+    <hr>
+
+
+    <div class="container">
+        <form action="#" th:action="@{/admins/deleteEvent}" th:object="${event}" method="POST">
+
+            <h5>Are you sure you want to delete this event?</h5>
+            <br>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="fn" class="form-label">Event Name</label>
+                    <input type="text" placeholder="Event Name" th:field="*{name}"
+                           class="form-control mb-4 col-4" id="fn" aria-label="Event Name" disabled/>
+                </div>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="pw" class="form-label">Event Date</label>
+                    <input type="date" placeholder="Event Date" th:field="*{date}"
+                           class="form-control mb-4 col-4" id="pw" aria-label="Event date" disabled/>
+                </div>
+            </div>
+
+            <input type="hidden" th:field="*{id}">
+
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-outline-danger btn-pad-top">Delete</button>
+                    <a href="/admins/events" class="btn btn-danger btn-pad-top">Cancel</a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

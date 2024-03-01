@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Edit Event'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Edit Upcoming Event</h4>
+    <hr>
+
+
+    <div class="container">
+        <form action="#" th:action="@{/admins/editEvent}" th:object="${event}" method="POST">
+
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <p>Please correct the errors below.</p>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="fn" class="form-label">Event Name</label>
+                    <input type="text" placeholder="Event Name" th:field="*{name}"
+                        class="form-control mb-4 col-4" id="fn" aria-label="Event Name" required/>
+                    <span class="help-block" th:if="${#fields.hasErrors('name')}">
+                        <p th:errors="*{name}" class="text-danger">Validation Error</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="pw" class="form-label">Event Date</label>
+                    <input type="date" placeholder="Event Date" th:field="*{date}"
+                           class="form-control mb-4 col-4" id="pw" aria-label="Event date" required/>
+                    <span class="help-block" th:if="${#fields.hasErrors('date')}">
+                        <p th:errors="*{password}" class="text-danger">Validation Error</p>
+                    </span>
+                    <span class="help-block" th:if="${dateError}">
+                        <p class="text-danger">Date must not be in the past.</p>
+                    </span>
+                </div>
+            </div>
+            <input type="hidden" th:field="*{id}">
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-pad-top">Submit</button>
+                    <a href="/admins/events" class="btn btn-danger btn-pad-top">Cancel</a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

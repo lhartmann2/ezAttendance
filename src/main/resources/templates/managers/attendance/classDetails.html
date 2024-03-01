@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Class Details'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <a th:href="${backUrl}" class="btn btn-primary btn-pad">Back</a>
+    <a th:href="${editUrl}" class="btn btn-primary btn-pad">Edit</a>
+
+
+    <br><br>
+    <h3 th:text="${className}"></h3>
+    <br>
+
+    <h5>Teacher</h5>
+    <a th:href="${teacherUrl}"><p th:text="${teacherName}"></p></a>
+
+    <h5>Start Date</h5>
+    <p th:text="${#dates.format(startDate, 'MMM-dd-yyyy')}"></p>
+    <h5>End Date</h5>
+    <p th:text="${#dates.format(endDate, 'MMM-dd-yyyy')}"></p>
+
+    <h5>Start Time</h5>
+    <p th:text="${#dates.format(startTime, 'hh:mm a')}"></p>
+    <h5>End Time</h5>
+    <p th:text="${#dates.format(endTime, 'hh:mm a')}"></p>
+
+    <h5>Students</h5>
+    <a th:href="${studentUrl}">View Students</a>
+    <br>
+    <br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

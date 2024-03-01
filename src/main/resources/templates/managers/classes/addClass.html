@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="/css/multiselect.css" rel="stylesheet" type="text/css" />
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+  <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Add Class'"></title>
+</head>
+
+<body>
+
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="/js/bootstrap-multiselect.js"></script>
+
+<div class="container">
+
+  <div th:insert="fragments/navbarClasses :: navbarClasses"></div>
+
+  <h4>Classes > Add Class</h4>
+  <p valign="middle"><img src="/images/info-circle.svg" class="bi me-2" width="40" height="32"><em>Be sure to add teachers and students before creating a class.</em></p>
+  <hr>
+
+  <div class="container">
+    <form action="#" th:action="@{/managers/classes/add}" th:object="${class}" method="POST">
+
+      <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+        <p>Please correct errors below.</p>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="fn" class="form-label">Class Name</label>
+          <input type="text" th:field="*{name}" placeholder="Class Name"
+                class="form-control mb-4 col-4" id="fn" aria-label="Class Name" required>
+          <span class="help-block" th:if="${#fields.hasErrors('name')}">
+            <p th:errors="*{name}" class="text-danger"></p>
+          </span>
+        </div>
+
+        <div class="col">
+          <label for="tn" class="form-label">Teacher</label>
+          <select class="form-control select-picker" id="tn" name="teacherPicker" th:field="${chosenTeacher.teachers}" required>
+            <option value="-1">None Selected</option>
+            <option th:each="teacher:${teacherList}" th:field=${chosenTeacher.teachers} th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName}"/>
+          </select>
+          <span class="help-block" th:if="${teacherError}">
+            <p class="text-danger">You must select a teacher for this class.</p>
+          </span>
+        </div>
+
+        <div class="col">
+          <label for="wd" class="form-label">Day of Week</label>
+          <select class="form-control select-picker" id="wd" th:field="*{dayOfWeek}" name="weekDayPicker" aria-label="Day of Week" required>
+            <option value="none">None Selected</option>
+            <option value="Sunday">Sunday</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+          </select>
+          <span class="help-block" th:if="${weekDayError}">
+            <p class="text-danger">You must select a day of the week for this class.</p>
+          </span>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="sT" class="form-label">Start Time</label>
+          <input type="time" th:field="*{startTime}" placeholder="Start Time"
+                 class="form-control mb-4 col-4" id="sT" aria-label="Start Time" required>
+          <span class="help-block" th:if="${#fields.hasErrors('startTime')}">
+            <p th:errors="*{startTime}" class="text-danger"></p>
+          </span>
+          <span class="help-block" th:if="${timeError}">
+            <p class="text-danger">Start time must be before the end time.</p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="eT" class="form-label">End Time</label>
+          <input type="time" th:field="*{endTime}" placeholder="End Time"
+                 class="form-control mb-4 col-4" id="eT" aria-label="End Time" required>
+          <span class="help-block" th:if="${#fields.hasErrors('endTime')}">
+            <p th:errors="*{endTime}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="sD" class="form-label">Start Date</label>
+          <input type="date" th:field="*{startDate}" name="startDate" placeholder="Start Date"
+                 class="form-control mb-4 col-4" id="sD" aria-label="Start Date" required>
+          <span class="help-block" th:if="${#fields.hasErrors('startDate')}">
+            <p th:errors="*{startDate}" class="text-danger"></p>
+          </span>
+          <span class="help-block" th:if="${dateError}">
+            <p class="text-danger">Start date must be before the end date.</p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="eD" class="form-label">End Date</label>
+          <input type="date" th:field="*{endDate}" placeholder="End Date"
+                 class="form-control mb-4 col-4" id="eD" aria-label="End Date" required>
+          <span class="help-block" th:if="${#fields.hasErrors('endDate')}">
+            <p th:errors="*{endDate}" class="text-danger"></p>
+          </span>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col"></div>
+        <div class="col">
+          <label for="sP" class="form-label">Students</label>
+          <select class="form-control select-picker" id="sP" name="studentPicker" th:field="${chosenStudents.students}" multiple="multiple" style="display: none;">
+            <div th:each="student:${studentList}">
+              <th:block th:if="${student.nickName == null or #strings.length(student.nickName)<1}">
+                <option th:field="${chosenStudents.students}" th:value="${student.id}" th:text="${student.firstName} + ' ' + ${student.lastName}"/>
+              </th:block>
+              <th:block th:unless="${student.nickName == null or #strings.length(student.nickName)<1}">
+                <option th:field="${chosenStudents.students}" th:value="${student.id}" th:text="${student.nickName} + ' ' + ${student.lastName}"/>
+              </th:block>
+            </div>
+          </select>
+          <span class="help-block" th:if="${studentError}">
+            <p class="text-danger">You must select at least one student to enroll.</p>
+          </span>
+        </div>
+        <div class="col"></div>
+      </div>
+
+      <div class="row gx-2 mb-4 gap-2">
+        <div class="col">
+          <button type="button" class="btn btn-outline-danger col float-end btn-pad" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary col float-end" id="submitBtn">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <br><br>
+
+  <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script src="/js/addClass.js"></script>
+</body>
+</html>

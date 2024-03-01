@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <title>footer</title>
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Contact Lists'"></title>
+</head>
+<body>
+<div th:fragment="footer" class="footer">
+    <div class="container float-bottom">
+        <footer class="footer-bs pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                            <img src="/images/calendar-week.svg" class="bi" width="30" height="24"></a>
+
+                            <!-- Facebook Group URL and visibility set in application.properties. -->
+                            <span th:if="${@environment.getProperty('attendance.app.fbEnabled')}">
+                                <a th:href="${@environment.getProperty('attendance.app.fbURL')}"
+                                   class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" target="_blank">
+                                    <img src="/images/facebook.svg" class="bi" width="30" height="24"
+                                        alt="Facebook Group">
+                                </a>
+                            </span>
+
+                            <!-- Instagram Group URL and visibility set in application.properties. -->
+                            <span th:if="${@environment.getProperty('attendance.app.igEnabled')}">
+                                <a th:href="${@environment.getProperty('attendance.app.igURL')}"
+                                   class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" target="_blank">
+                                    <img src="/images/instagram.svg" class="bi" width="30" height="24"
+                                        alt="Instagram Page">
+                                </a>
+                            </span>
+
+                            <!-- Twitter / X Group URL and visibility set in application.properties. -->
+                            <span th:if="${@environment.getProperty('attendance.app.twEnabled')}">
+                                <a th:href="${@environment.getProperty('attendance.app.twURL')}"
+                                   class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" target="_blank">
+                                    <img src="/images/twitter.svg" class="bi" width="30" height="24"
+                                        alt="Twitter Page">
+                                </a>
+                            </span>
+
+                            <!-- YouTube Group URL and visibility set in application.properties. -->
+                            <span th:if="${@environment.getProperty('attendance.app.ytEnabled')}">
+                                <a th:href="${@environment.getProperty('attendance.app.ytURL')}"
+                                   class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" target="_blank">
+                                    <img src="/images/youtube.svg" class="bi" width="30" height="24"
+                                        alt="YouTube Channel">
+                                </a>
+                            </span>
+
+                            <!-- TikTok Group URL and visibility set in application.properties. -->
+                            <span th:if="${@environment.getProperty('attendance.app.ttEnabled')}">
+                                <a th:href="${@environment.getProperty('attendance.app.ttURL')}"
+                                   class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" target="_blank">
+                                    <img src="/images/tiktok.svg" class="bi" width="30" height="24"
+                                        alt="TikTok Page">
+                                </a>
+                            </span>
+
+                            <!-- Pinterest Group URL and visibility set in application.properties. -->
+                            <span th:if="${@environment.getProperty('attendance.app.ptEnabled')}">
+                                <a th:href="${@environment.getProperty('attendance.app.ptURL')}"
+                                   class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" target="_blank">
+                                    <img src="/images/pinterest.svg" class="bi" width="30" height="24"
+                                        alt="Pinterest Page">
+                                </a>
+                            </span>
+
+                        </li>
+                        <li class="float-end"><a href="#top">Back to top</a></li>
+                        <li class="d-block mb-3 text-muted"><small>Logged in as <span sec:authentication="name">name</span></small></li>
+                        <li class="d-block mb-3 text-muted"><small><a href="/managers/account/">Account</a></small></li>
+                        <!-- Admins Only -->
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="d-block mb-3 text-muted"><small><a href="/admins/">Admin</a></small></li>
+                        </div>
+                        <li class="d-block mb-3 text-muted"><small><a href="/logout">Logout</a></small></li>
+                        <!-- App credits / Github link visibility set in application.properties. -->
+                        <span th:if="${@environment.getProperty('attendance.app.credits')}">
+                            <li class="d-block mb-3 text-muted"><small><a href="https://github.com/lhartmann2" target="_blank">2024 LHP</a></small></li>
+                        </span>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

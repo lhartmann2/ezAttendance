@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Attendance Export'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 name="headerText" th:value="${headerText}" th:text="${headerText}"></h4>
+    <hr>
+
+    <div th:if="${showBanner}" class="container">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong th:text="${errorText}"></strong>
+        </div>
+    </div>
+
+    <div th:if="${infoTextEnabled}" class="container">
+        <img src="/images/info-circle.svg" width="32" height="40"><em th:text="${infoText}">Info text</em>
+    </div>
+    <br>
+
+    <div class="container">
+        <form action="#" th:action="${subUrl}" method="GET">
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="sd" class="form-label">From Date</label>
+                    <input type="date" th:name="startDate" th:value="${sdVal}" name="startDate" placeholder="From Date"
+                           class="form-control" id="sd" aria-label="From Date" required>
+                    <span class="help-block" th:if="${startDateError}">
+                        <p class="text-danger">From Date must be equal to or before To Date.</p>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="max-width: 350px;">
+                    <label for="ed" class="form-label">To Date</label>
+                    <input type="date" th:name="endDate" th:value="${edVal}" name="endDate" placeholder="To Date"
+                           class="form-control" id="ed" aria-label="To Date" required>
+                    <span class="help-block" th:if="${endDateError}">
+                        <p class="text-danger">To Date must be equal to or after From Date.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col" style="max-width: 350px;">
+                    <br>
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-pad btn-pad-top">Next</button>
+                    <a th:href="${subUrlAll}" id="allTime" class="btn btn-primary btn-pad btn-pad-top">All Time</a>
+                    <a th:href="${backUrl}" class="btn btn-danger btn-pad btn-pad-top">Back</a>
+                </div>
+            </div>
+            <input type="hidden" id="studentId" th:value="${sId}">
+            <input type="hidden" id="classId" th:value="${cId}">
+        </form>
+    </div>
+
+    <br>
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<input type="hidden" id="selectType" th:value="${selectType}">
+<input type="hidden" id="selectTeacher" th:value="${teacherId}">
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/attendanceSelector.js"></script>
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

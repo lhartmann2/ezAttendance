@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Attendance Export'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <a th:href="${backUrl}" class="btn btn-primary">Back</a>
+    <hr>
+
+    <div class="text-center container-fluid">
+        <div class="row row-cols-2">
+            <div class="d-grid col-6 mx-auto">
+                <form action="#" th:action="@{/managers/attendance/exportTextOne/{cId}(cId = ${cId})}" method="POST">
+                    <button type="submit" class="btn btn-primary">Export as Text</button>
+                </form>
+            </div>
+            <div class="d-grid col-6 mx-auto">
+                <form action="#" th:action="@{/managers/attendance/exportCSVOne/{cId}(cId = ${cId})}" method="POST">
+                    <button type="submit" class="btn btn-primary">Export as CSV</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

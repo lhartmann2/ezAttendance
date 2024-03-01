@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+  <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Edit Student'"></title>
+</head>
+
+<body>
+<div class="container">
+
+  <div th:insert="fragments/navbarStudents :: navbarStudents"></div>
+
+  <h4 th:text="${headerText}"></h4>
+  <p valign="middle"><img src="/images/info-circle.svg" class="bi me-2" width="40" height="32"><em>Be sure to add parents / guardians first so that students can be attached to them.</em></p>
+  <hr>
+
+  <div class="container">
+    <form action="#" th:action="@{/managers/students/edit}" th:object="${student}" method="POST">
+
+      <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+        <p>Please correct errors below.</p>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="fn" class="form-label">First Name</label>
+          <input type="text" th:field="*{firstName}" placeholder="First Name"
+                class="form-control mb-4 col-4" id="fn" aria-label="First Name" required>
+          <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
+            <p th:errors="*{firstName}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="ln" class="form-label">Last Name</label>
+          <input type="text" th:field="*{lastName}" placeholder="Last Name"
+                class="form-control mb-4 col-4" id="ln" aria-label="Last Name" required>
+          <span class="help-block" th:if="${#fields.hasErrors('lastName')}">
+            <p th:errors="*{lastName}" class="text-danger"></p>
+          </span>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="db" class="form-label">Birthday</label>
+          <input type="date" th:field="*{dob}" placeholder="Birthday"
+                 class="form-control mb-4 col-4" id="db" aria-label="Birthday" required>
+          <span class="help-block" th:if="${#fields.hasErrors('dob')}">
+            <p th:errors="*{dob}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="nn" class="form-label">Nick Name <em class="text-muted">(Optional)</em></label>
+          <input type="text" th:field="*{nickName}" placeholder="Nick Name"
+                 class="form-control mb-4 col-4" id="nn" aria-label="Nick Name">
+          <span class="help-block" th:if="${#fields.hasErrors('nickName')}">
+            <p th:errors="*{nickName}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="ph" class="form-label">Phone Number <em class="text-muted">(Optional)</em></label>
+          <input type="tel" th:field="*{phone}" placeholder="Phone Number"
+                 class="form-control mb-4 col-4" id="ph" aria-label="Phone Number">
+          <span class="help-block" th:if="${#fields.hasErrors('phone')}">
+            <p th:errors="*{phone}" class="text-danger"></p>
+          </span>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="p1" class="form-label">Parent / Guardian</label>
+          <select class="form-control select-picker" id="p1" name="parentPicker1" required>
+            <option value="-1">None</option>
+            <option th:each="parent:${parentList}" th:value="${parent.id}" th:text="${parent.firstName} + ' ' + ${parent.lastName}" th:selected="${parent.equals(pSelect1)}"/>
+          </select>
+          <span class="help-block" th:if="${parentError}">
+            <p class="text-danger">You must select a primary parent / guardian.</p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="p2" class="form-label">2nd Parent / Guardian <em class="text-muted">(Optional)</em></label>
+          <select class="form-control select-picker" id="p2" name="parentPicker2">
+            <option value="-1">None</option>
+            <option th:each="parent:${parentList}" th:value="${parent.id}" th:text="${parent.firstName} + ' ' + ${parent.lastName}" th:selected="${parent.equals(pSelect2)}"/>
+          </select>
+        </div>
+      </div>
+
+      <div class="row gx-2 mb-4">
+        <div class="col">
+          <label for="allergies" class="form-label">Allergies <em class="text-muted">(Optional)</em></label>
+          <input type="text" th:field="*{allergies}" placeholder="Allergies"
+                 class="form-control mb-4 col-4" id="allergies" aria-label="Allergies">
+          <span class="help-block" th:if="${#fields.hasErrors('allergies')}">
+            <p th:errors="*{allergies}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="notes" class="form-label">Notes <em class="text-muted">(Optional)</em></label>
+          <input type="text" th:field="*{notes}" placeholder="Notes"
+                 class="form-control mb-4 col-4" id="notes" aria-label="Notes">
+          <span class="help-block" th:if="${#fields.hasErrors('notes')}">
+            <p th:errors="*{notes}" class="text-danger"></p>
+          </span>
+        </div>
+        <div class="col">
+          <label for="hospital" class="form-label">Preferred Hospital <em class="text-muted">(Optional)</em></label>
+          <input type="text" th:field="*{hospital}" placeholder="Preferred Hospital"
+                 class="form-control mb-4 col-4" id="hospital" aria-label="Preferred Hospital">
+          <span class="help-block" th:if="${#fields.hasErrors('hospital')}">
+            <p th:errors="*{hospital}" class="text-danger"></p>
+          </span>
+        </div>
+        <input type="hidden" th:field="*{id}" id="tId"/>
+      </div>
+
+      <div class="row gx-2 mb-4 gap-2">
+        <div class="col">
+          <button type="button" class="btn btn-danger col float-end btn-pad" id="deleteBtn">Delete</button>
+          <button type="button" class="btn btn-outline-danger col float-end btn-pad" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary col float-end btn-pad" id="submitBtn">Update</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <br><br>
+
+  <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/addStudent.js"></script>
+<script src="/js/deleteStudent.js"></script>
+</body>
+</html>

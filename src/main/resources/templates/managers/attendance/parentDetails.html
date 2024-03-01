@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Parent Details'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <a th:href="${backUrl}" class="btn btn-primary btn-pad">Back</a>
+    <a th:href="${editUrl}" class="btn btn-primary btn-pad">Edit</a>
+
+
+    <br><br>
+    <h1 th:text="${firstName} + ' ' + ${lastName}"></h1>
+    <br><br>
+
+    <h4>Address</h4>
+    <p th:text="${street}"></p>
+    <p th:text="${city} + ' ' + ${state} + ' ' + ${zip}"></p>
+    <br>
+
+    <h4>Contact</h4>
+    <p><a th:text="${phone}" th:href="'tel:+'+${phone}"></a></p>
+    <p><a th:text="${email}" th:href="'mailto:'+${email}"></a></p>
+    <br>
+
+    <h4>Notes</h4>
+    <p th:text="${other}" style="overflow-wrap:break-word;"></p>
+    <br>
+    <br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

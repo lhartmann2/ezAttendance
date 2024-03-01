@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Take Attendance'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarAttendance :: navbarAttendance"></div>
+
+    <h4 th:text="${headerText}"></h4>
+    <hr>
+
+    <div class="container">
+        <form action="#" th:action="${submitUrl}" th:object="${dto}" method="POST">
+
+            <div>
+                <div th:each="at,i : ${dto.attendances}">
+
+                        <div class="form-control card border-dark bg-white display:flex m-1">
+                            <th:block th:if="${at.student.nickName == null or #strings.length(at.student.nickName)<1}">
+                                <h3 class="card-header border-dark bg-transparent" th:text="${at.student.firstName} + ' ' + ${at.student.lastName}">Name</h3>
+                            </th:block>
+                            <th:block th:unless="${at.student.nickName == null or #strings.length(at.student.nickName)<1}">
+                                <h3 class="card-header border-dark bg-transparent" th:text="${at.student.nickName} + ' ' + ${at.student.lastName}">Name</h3>
+                            </th:block>
+                            <div class="card-body">
+                                <div class="form-check form-switch">
+                                    <input type="checkbox" class="form-check-input presentCheck"
+                                           th:checked="${at.present}"
+                                           th:field="*{attendances[__${i.index}__].present}" th:id="'check'+${i.index}"/>
+                                    <label class="form-check-label" th:id="'checkLabel'+${i.index}">Present</label>
+                                </div>
+
+                                <div class="form-check form-switch" th:id="'exDiv'+${i.index}">
+                                    <input type="checkbox" class="form-check-input excusedCheck"
+                                           th:checked="${at.excused}"
+                                           th:field="*{attendances[__${i.index}__].excused}" th:id="'exCheck'+${i.index}"/>
+                                    <label class="form-check-label" th:id="'exLabel'+${i.index}">Not Excused</label>
+                                </div>
+
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Notes</span>
+                                    <input type="text" maxlength="255" class="form-control" style="max-width: 350px;" placeholder="Sick, On Vacation, etc." aria-label="Notes"
+                                           th:value="${at.reason}"
+                                           th:field="*{attendances[__${i.index}__].reason}"/>
+                                </div>
+                                <input type="hidden" th:value="${at.id}" th:field="*{attendances[__${i.index}__].id}"/>
+                                <input type="hidden" th:value="${at.container}" th:field="*{attendances[__${i.index}__].container}"/>
+                                <input type="hidden" th:value="${at.student}" th:field="*{attendances[__${i.index}__].student}"/>
+                            </div>
+                        </div>
+                    <input type="hidden" id="length" th:value="${#lists.size(dto.attendances)}"/>
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-primary form-control" style="margin:5px;" value="Submit">
+            <a th:href="${backUrl}" class="btn btn-danger form-control" style="margin:5px;">Cancel</a>
+
+        </form>
+    </div>
+    <br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/takeAttendance.js"></script>
+
+</body>
+</html>

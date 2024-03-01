@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link hre="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Unlock Accounts'"></title>
+</head>
+
+<body >
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Unlock Accounts</h4>
+    <hr>
+
+    <div class="container">
+        <form action="#" th:action="@{/admins/unlockAccount}" th:object="${user}" method="POST">
+
+            <div class="row" style="max-width: 350px;">
+                <div class="col">
+                    <label for="un" class="form-label">Select Account</label>
+                    <select id="un" class="form-control select-picker" name="username" th:field="*{name}"required>
+                        <option value="-1">Select User</option>
+                        <option th:each="u:${userList}" th:value="${u.username}" th:text="${u.username}"/>
+                    </select>
+                    <span class="help-block" th:if="${userError}">
+                        <p class="text-danger">Select a valid user.</p>
+                    </span>
+                    <input type="hidden" th:field="*{password}">
+                    <input type="hidden" th:field="*{matchingPassword}">
+                </div>
+            </div>
+
+
+            <br>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-pad btn-pad-top">Submit</button>
+                    <a href="/admins/" class="btn btn-danger btn-pad btn-pad-top">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <br><br>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>

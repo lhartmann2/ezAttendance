@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
+    <title th:text="${@environment.getProperty('attendance.app.name')} + ' - Support'"></title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:insert="fragments/navbarNone :: navbarNone"></div>
+
+    <h4><span sec:authentication="name">name</span> > Admin Settings > Report Problem</h4>
+    <hr>
+
+    <div class="container">
+        <a href="/admins/" class="btn btn-primary">Back</a>
+    </div>
+    <br>
+
+    <div class="container text-center">
+        <h2>Report Problems and Glitches</h2>
+        <p>Submit any noticed problems or glitches to the email below.</p>
+        <p>Please include any relevant details, such as the page where</p>
+        <p>the problem occurred, actions that caused the problem, etc.</p>
+        <p>
+            <a th:href="'mailto:' + ${@environment.getProperty('attendance.app.adminEmail')}">
+                <span th:text="${@environment.getProperty('attendance.app.adminEmail')}"></span>
+            </a>
+        </p>
+        <br>
+        <p>Thank you!</p>
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>
