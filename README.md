@@ -18,6 +18,7 @@ A lightweight, customizable, and mobile-friendly management suite for small scho
 - Domain and SSL key (for HTTPS support)
 
 ## Initial Setup
+Clone the repository to your machine and navigate to the project's root directory.
 ### Database
 Execute 'attendance.sql' on your MariaDB instance to setup the required schema and tables.
 
